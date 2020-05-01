@@ -1,15 +1,96 @@
-# TorchServe
-
-TorchServe is a flexible and easy to use tool for serving PyTorch models.
-
-**For full documentation, see [Model Server for PyTorch Documentation](docs/README.md).**
+# Install and Serve
 
 ## Contents of this Document
 
+* [Install TorchServe](#install-torchserve)
 * [Serve a Model](#serve-a-model)
 * [Quick start with docker](#quick-start-with-docker)
 * [Contributing](#contributing)
 
+## Install TorchServe
+
+Conda instructions are provided in more detail, but you may also use `pip` and `virtualenv` if that is your preference.
+**Note:** Java 11 is required. Instructions for installing Java 11 for Ubuntu or macOS are provided in the [Install with Conda](#install-with-conda) section.
+
+### Install with pip
+To use `pip` to install TorchServe and the model archiver:
+
+```
+pip install torch torchtext torchvision sentencepiece
+pip install torchserve torch-model-archiver
+```
+
+### Install with Conda
+_Ubuntu_
+
+1. Install Java 11
+    ```bash
+    sudo apt-get install openjdk-11-jdk
+    ```
+1. Install Conda (https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html)
+1. Create an environment and install torchserve and torch-model-archiver
+    For CPU
+    ```bash
+    conda create --name torchserve torchserve torch-model-archiver pytorch torchtext torchvision -c pytorch -c powerai
+    ```
+    For GPU
+    ```bash
+    conda create --name torchserve torchserve torch-model-archiver pytorch torchtext torchvision cudatoolkit=10.1 -c pytorch -c powerai
+    ```
+1. Activate the environment
+    ```bash
+    source activate torchserve
+    ```
+
+_macOS_
+
+1. Install Java 11
+    ```bash
+    brew tap AdoptOpenJDK/openjdk
+    brew cask install adoptopenjdk11
+    ```
+1. Install Conda (https://docs.conda.io/projects/conda/en/latest/user-guide/install/macos.html)
+1. Create an environment and install torchserve and torch-model-archiver
+    ```bash
+    conda create --name torchserve torchserve torch-model-archiver pytorch torchtext torchvision -c pytorch -c powerai
+    ```
+1. Activate the environment
+    ```bash
+    source activate torchserve
+    ```
+
+Now you are ready to [package and serve models with TorchServe](#serve-a-model).
+
+### Install TorchServe for development
+
+If you plan to develop with TorchServe and change some of the source code, you must install it from source code.
+First, clone the repo with:
+
+```bash
+git clone https://github.com/pytorch/serve
+cd serve
+```
+
+Then make your changes executable with this command:
+
+```bash
+pip install -e .
+```
+
+* To develop with torch-model-archiver:
+
+```bash
+cd serve/model-archiver
+pip install -e .
+```
+
+* To upgrade TorchServe or model archiver from source code and make changes executable, run:
+
+```bash
+pip install -U -e .
+```
+
+For information about the model archiver, see [detailed documentation](model-archiver/README.md).
 
 ## Serve a model
 
